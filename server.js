@@ -8,6 +8,10 @@ const authRoutes = require("./routes/auth");
 const albumRoutes = require("./routes/album");
 const orderRoutes = require("./routes/order");
 const downloadRoutes = require("./routes/download");
+const eventRoutes  = require("./routes/eventRoutes.js");
+const galleryRoutes = require("./routes/galleryRoutes");
+
+
 
 require("dotenv").config();
 
@@ -47,7 +51,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/albums", albumRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/download", downloadRoutes);
-
+app.use("/api/events", eventRoutes);
+app.use("/api/gallery", galleryRoutes);
 // Health check endpoint
 app.get("/health", (req, res) => {
   res.status(200).json({
