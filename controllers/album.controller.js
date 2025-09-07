@@ -139,3 +139,45 @@ module.exports = {
   updateAlbum,
   deleteAlbum
 };
+
+
+
+
+
+
+
+
+
+// // backend/controllers/album.controller.js
+// const Album = require("../models/Album");
+
+// // Create Album (Admin only)
+// const createAlbum = async (req, res) => {
+//   try {
+//     const { title, description, duration, price, image } = req.body;
+
+//     if (!title || !description || !duration || !price || !image) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "All fields including image are required",
+//       });
+//     }
+
+//     const album = await Album.create({ title, description, duration, price, image });
+
+//     return res.status(201).json({
+//       success: true,
+//       message: "Album created successfully",
+//       data: album,
+//     });
+//   } catch (error) {
+//     console.error("Error creating album:", error);
+//     return res.status(500).json({
+//       success: false,
+//       message: "Error creating album",
+//       error: error.message,
+//     });
+//   }
+// };
+
+// // Other CRUD remain mostly the same but `driveFileId` is gone

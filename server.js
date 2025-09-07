@@ -10,7 +10,7 @@ const orderRoutes = require("./routes/order");
 const downloadRoutes = require("./routes/download");
 const eventRoutes  = require("./routes/eventRoutes.js");
 const galleryRoutes = require("./routes/galleryRoutes");
-
+const uploadRoutes = require("./routes/upload");
 
 
 require("dotenv").config();
@@ -53,6 +53,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/download", downloadRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/gallery", galleryRoutes);
+app.use("/api/upload", uploadRoutes);
 // Health check endpoint
 app.get("/health", (req, res) => {
   res.status(200).json({
