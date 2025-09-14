@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const adminRoutes = require("./routes/admin");
 const songRoutes = require("./routes/song");
-const authRoutes = require("./routes/auth");
+// const authRoutes = require("./routes/auth");
 const albumRoutes = require("./routes/album");
 const orderRoutes = require("./routes/order");
 const downloadRoutes = require("./routes/download");
@@ -19,14 +19,29 @@ require("dotenv").config();
 const app = express();
 
 // CORS configuration
-// app.use(cors({
-//   origin: process.env.FRONTEND_URL || "http://localhost:3000",
-//   credentials: true
-// }));
+const allowedOrigins = [
+  "http://localhost:8080",
+  "http://localhost:3000",
+  "http://localhost:5173",
+  "https://vdjshaan.com",
+  "https://www.vdjshaan.com",
+  "https://dj-shaan.vercel.app"
+];
+
 app.use(cors({
-  origin: true,  // reflect request origin
+  origin: function (origin, callback) {
+    // Allow requests with no origin (curl, Postman, server-to-server)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
+
 
 
 // Body parser
@@ -47,7 +62,7 @@ mongoose.connect(process.env.MONGO_URI, {
 // Routes
 app.use("/api/admin", adminRoutes);
 app.use("/api/songs", songRoutes);
-app.use("/api/auth", authRoutes);
+// app.use("/api/auth", authRoutes);
 app.use("/api/albums", albumRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/download", downloadRoutes);
@@ -87,6 +102,7 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📍 Environment: ${process.env.NODE_ENV || "development"}`);
+  
 
 });
 
@@ -101,48 +117,3 @@ process.on('SIGINT', () => {
   process.exit(0);
 });
 
-
-
-
-
-
-
-
-// const express = require("express");
-// const mongoose = require("mongoose");
-// const cors = require("cors");
-// const songRoutes = require("./routes/song");
-
-// require("dotenv").config();
-
-// const app = express();
-
-// app.use(cors({
-//   origin: process.env.FRONTEND_URL || "http://localhost:3000",
-//   credentials: true
-// }));
-
-// app.use(express.json({ limit: "10mb" }));
-// app.use(express.urlencoded({ extended: true, limit: "10mb" }));
-
-// mongoose.connect(process.env.MONGO_URI, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// })
-// .then(() => console.log("✅ MongoDB Connected"))
-// .catch(err => { console.error(err); process.exit(1); });
-
-// app.use("/api/songs", songRoutes);
-
-// app.get("/health", (req, res) => {
-//   res.status(200).json({ success: true, message: "Server is running" });
-// });
-
-// app.use("*", (req, res) => {
-//   res.status(404).json({ success: false, message: "Route not found" });
-// });
-
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => {
-//   console.log(`🚀 Server running on port ${PORT}`);
-// });
